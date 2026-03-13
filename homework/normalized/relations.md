@@ -8,7 +8,6 @@ erDiagram
         INTEGER price
         INTEGER stock_quantity
 
-        DATETIME created_at "DEFAULT NOW(), NOT NULL"
         DATETIME updated_at "DEFAULT NOW(), NOT NULL"
     }
 
