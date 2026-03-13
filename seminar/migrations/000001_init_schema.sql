@@ -21,7 +21,8 @@ CREATE TABLE "medicine" (
 CREATE TABLE "supplier" (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
-    contract_number TEXT NOT NULL,
+    contract TEXT NOT NULL,
+    name TEXT NOT NULL,
     city TEXT NOT NULL,
     contract_agreement_date DATE
 );
@@ -41,7 +42,7 @@ CREATE TABLE "order" (
     CONSTRAINT fk_order_supplier
         FOREIGN KEY (supplier_id)
         REFERENCES "supplier"(id)
-        ON DELETE SET NULL
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE "order_line" (
@@ -58,7 +59,7 @@ CREATE TABLE "order_line" (
     CONSTRAINT fk_order_line_order
         FOREIGN KEY (order_id)
         REFERENCES "order"(id)
-        ON DELETE RESTRICT,
+        ON DELETE CASCADE,
     
     CONSTRAINT fk_order_line_medicine
         FOREIGN KEY (medicine_id)

@@ -16,7 +16,7 @@ erDiagram
     supplier {
         INTEGER id PK
         TEXT contract
-        TEXT supplier_name
+        TEXT name
         TEXT city
         DATE contract_agreement_date
     }
