@@ -20,7 +20,7 @@ CREATE TABLE "buyer" (
     name TEXT NOT NULL,
     city TEXT NOT NULL,
 
-    contract_dat DATE DEFAULT NOW() NOT NULL
+    contract_date DATE DEFAULT NOW() NOT NULL
 );
 
 CREATE TABLE "invoice" (
@@ -34,7 +34,7 @@ CREATE TABLE "invoice" (
     CONSTRAINT fk_invoice_buyer
         FOREIGN KEY (buyer_id)
         REFERENCES "buyer"(id)
-        ON DELETE SET NULL
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE "invoice_line" (
@@ -72,5 +72,5 @@ CREATE TABLE "sales_history" (
     CONSTRAINT fk_sales_history_detail
         FOREIGN KEY (detail_id)
         REFERENCES "detail"(id)
-        ON DELETE SET NULL
+        ON DELETE CASCADE
 );

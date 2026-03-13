@@ -68,7 +68,19 @@ CREATE TABLE "order_line" (
 
 CREATE TABLE "stock" (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    medicine_id INTEGER NOT NULL,
 
     sku TEXT NOT NULL,
     
+    quantity INTEGER
+        CHECK (quantity >= 0),
+    price INTEGER
+        CHECK (price > 0),
+    
+    accounting_date TIMESTAMP WITH ZONE DEFAULT NOW() NOT NULL,
+
+    CONSTRAINT fk_stock_medicine
+        FOREIGN KEY (medicine_id)
+        REFERENCES "medicine"(id)
+        ON DELETE RESTRICT
 );
