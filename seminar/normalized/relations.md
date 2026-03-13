@@ -15,10 +15,10 @@ erDiagram
 
     supplier {
         INTEGER id PK
-        TEXT conclusion
+        TEXT contract
         TEXT supplier_name
         TEXT city
-        DATE conclusion_agreement_date
+        DATE contract_agreement_date
     }
 
     order {
@@ -27,6 +27,7 @@ erDiagram
         DATE receipt_date_expected
         DATE receipt_date_actual
         INTEGER cost
+        DATE created_at
     }
 
     order_line {
