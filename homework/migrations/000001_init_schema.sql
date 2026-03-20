@@ -1,21 +1,21 @@
 CREATE TABLE "detail" (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     
     name TEXT NOT NULL,
     material TEXT NOT NULL,
 
-    weight INTEGER
+    weight BIGINT
         CHECK (weight > 0),
-    price INTEGER
+    price BIGINT
         CHECK (price > 0),
-    stock_quantity INTEGER
+    stock_quantity INT
         CHECK (stock_quantity >= 0),
     
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 
 CREATE TABLE "buyer" (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
     name TEXT NOT NULL,
     city TEXT NOT NULL,
@@ -24,12 +24,12 @@ CREATE TABLE "buyer" (
 );
 
 CREATE TABLE "invoice" (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    buyer_id INTEGER NOT NULL,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    buyer_id INT NOT NULL,
 
     invoice_date DATE DEFAULT NOW() NOT NULL,
-    total_cost INTEGER
-        CHECK (total_cost > 0),
+    total_cost BIGINT DEFAULT 0
+        CHECK (total_cost >= 0),
 
     CONSTRAINT fk_invoice_buyer
         FOREIGN KEY (buyer_id)
@@ -38,13 +38,15 @@ CREATE TABLE "invoice" (
 );
 
 CREATE TABLE "invoice_line" (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    invoice_id INTEGER NOT NULL,
-    detail_id INTEGER NOT NULL,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    
+    invoice_id INT NOT NULL,
+    detail_id INT NOT NULL,
+    UNIQUE (invoice_id, detail_id),
 
-    quantity INTEGER
+    quantity INT
         CHECK (quantity > 0),
-    price INTEGER
+    price BIGINT
         CHECK (price > 0),
     
     CONSTRAINT fk_invoice_line_invoice
@@ -59,12 +61,12 @@ CREATE TABLE "invoice_line" (
 );
 
 CREATE TABLE "sales_history" (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    detail_id INTEGER NOT NULL,
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    detail_id INT NOT NULL,
 
-    old_quantity INTEGER
+    old_quantity INT
         CHECK (old_quantity > 0),
-    new_quantity INTEGER
+    new_quantity INT
         CHECK (new_quantity >= 0),
     
     sale_date TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
