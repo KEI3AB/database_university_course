@@ -78,7 +78,7 @@ CREATE TABLE "stock" (
     price INTEGER
         CHECK (price > 0),
     
-    accounting_date TIMESTAMP WITH ZONE DEFAULT NOW() NOT NULL,
+    accounting_date TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
 
     CONSTRAINT fk_stock_medicine
         FOREIGN KEY (medicine_id)
