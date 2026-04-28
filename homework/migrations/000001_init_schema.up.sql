@@ -60,7 +60,7 @@ CREATE TABLE "invoice_line" (
         ON DELETE RESTRICT
 );
 
-CREATE TABLE "sales_history" (
+CREATE TABLE "sale_history" (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     detail_id INT NOT NULL,
 
@@ -71,7 +71,24 @@ CREATE TABLE "sales_history" (
     
     sale_date TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
 
-    CONSTRAINT fk_sales_history_detail
+    CONSTRAINT fk_sale_history_detail
+        FOREIGN KEY (detail_id)
+        REFERENCES "detail"(id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE "price_history" (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    detail_id INT,
+
+    old_price BIGINT
+        CHECK (old_price > 0),
+    new_price BIGINT
+        CHECK (new_price > 0),
+    
+    change_date TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+
+    CONSTRAINT fk_price_history_detail
         FOREIGN KEY (detail_id)
         REFERENCES "detail"(id)
         ON DELETE CASCADE
